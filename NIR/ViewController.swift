@@ -12,22 +12,88 @@ class ViewController: UIViewController, ImagePickerDelegate {
     
     
     @IBOutlet weak var imageView: UIImageView!
+    @IBOutlet weak var nextButton: UIButton!
     private var imagePicker: ImagePicker!
+    @IBOutlet weak var errorLabel: UILabel!
+    @IBOutlet weak var activity: UIActivityIndicatorView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        errorLabel.isHidden = true
+        activity.isHidden = true
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
         imageView.image = UIImage(named: "face6")
+        imageView.backgroundColor = .clear
         detect()
     }
     
     @IBAction func newPhoto(_ sender: UIBarButtonItem) {
+        let alertController = UIAlertController(title: "Найти фото",
+                                                message: "Вставте сслыку на фото из интернета",
+                                                preferredStyle: .alert)
+        alertController.addTextField()
+        let action = UIAlertAction(title: "Найти", style: .default) {action in
+            guard let text = alertController.textFields?.first?.text, !text.isEmpty else {
+                self.errorLabel.isHidden = false
+                self.setErrorMessage(text: "Вставте ссылку на картинку")
+                return
+            }
+            Task {
+                do {
+                    self.activity.isHidden = false
+                    self.activity.startAnimating()
+                    let data = try await NetworkManager.shared.downloadImage(urlString:text)
+                    self.setImage(data: data)
+                } catch NetworkErrors.badUrl {
+                    self.setErrorMessage(text: "Неверный URL, пожалуйста проверьте URL и повторите попвтку")
+                    self.activity.stopAnimating()
+                    self.activity.isHidden = true
+                } catch NetworkErrors.internalError {
+                     self.setErrorMessage(text: "Внутренняя ошибка, повторите попытку позже")
+                    self.activity.stopAnimating()
+                    self.activity.isHidden = true
+                } catch NetworkErrors.noInternetConnection {
+                     self.setErrorMessage(text: "Нет подключения к интернету, проверьте подлючение и повторите снова")
+                    self.activity.stopAnimating()
+                    self.activity.isHidden = true
+                } catch {
+                    self.setErrorMessage(text: "Неизвестная ошибка")
+                    self.activity.stopAnimating()
+                    self.activity.isHidden = true
+                }
+            }
+        }
+        alertController.addAction(action)
+        present(alertController, animated: true)
+        
+    }
+    @MainActor
+    private func setErrorMessage(text: String) {
+        self.errorLabel.text = text
+        self.errorLabel.isHidden = false
+    }
+    
+    @MainActor
+    private func setImage(data: Data) {
+        imageView.image = UIImage(data: data)
+        if imageView.image != nil {
+            detect()
+        } else {
+            self.setErrorMessage(text: "Неизвестная ошибка")
+            imageView.backgroundColor = .opaqueSeparator
+        }
+        activity.stopAnimating()
+        activity.isHidden = true
+        self.errorLabel.isHidden = true
+    }
+    
+    @IBAction func takePhoto(_ sender: UIBarButtonItem) {
+        self.imagePicker.present(from: view)
+    }
+    @IBAction func nextButtonAction(_ sender: UIButton) {
         let randNum = Int.random(in: 6...35)
         self.imageView.image = UIImage(named: "face\(randNum)")
         self.detect()
-    }
-    @IBAction func takePhoto(_ sender: UIBarButtonItem) {
-        self.imagePicker.present(from: view)
     }
     
     func detect() {

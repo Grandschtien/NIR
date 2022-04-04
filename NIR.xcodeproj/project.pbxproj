@@ -14,6 +14,7 @@
 		601950AC27F5F26E00221BE8 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 601950AB27F5F26E00221BE8 /* Assets.xcassets */; };
 		601950AF27F5F26E00221BE8 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 601950AD27F5F26E00221BE8 /* LaunchScreen.storyboard */; };
 		601950B727F6537100221BE8 /* ImagePicker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 601950B627F6537100221BE8 /* ImagePicker.swift */; };
+		60C070A927FB1C4D003F449E /* NetworkManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 60C070A827FB1C4D003F449E /* NetworkManager.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		601950AE27F5F26E00221BE8 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		601950B027F5F26E00221BE8 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		601950B627F6537100221BE8 /* ImagePicker.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ImagePicker.swift; sourceTree = "<group>"; };
+		60C070A827FB1C4D003F449E /* NetworkManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NetworkManager.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,7 @@
 				601950AD27F5F26E00221BE8 /* LaunchScreen.storyboard */,
 				601950B027F5F26E00221BE8 /* Info.plist */,
 				601950B627F6537100221BE8 /* ImagePicker.swift */,
+				60C070A827FB1C4D003F449E /* NetworkManager.swift */,
 			);
 			path = NIR;
 			sourceTree = "<group>";
@@ -143,6 +146,7 @@
 			files = (
 				601950A727F5F26800221BE8 /* ViewController.swift in Sources */,
 				601950B727F6537100221BE8 /* ImagePicker.swift in Sources */,
+				60C070A927FB1C4D003F449E /* NetworkManager.swift in Sources */,
 				601950A327F5F26800221BE8 /* AppDelegate.swift in Sources */,
 				601950A527F5F26800221BE8 /* SceneDelegate.swift in Sources */,
 			);
