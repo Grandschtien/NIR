@@ -22,7 +22,7 @@ class ViewController: UIViewController, ImagePickerDelegate {
         errorLabel.isHidden = true
         activity.isHidden = true
         self.imagePicker = ImagePicker(presentationController: self, delegate: self)
-        imageView.image = UIImage(named: "face6")
+        imageView.image = UIImage(named: "face9")
         imageView.backgroundColor = .clear
         detect()
     }
@@ -65,7 +65,6 @@ class ViewController: UIViewController, ImagePickerDelegate {
         }
         alertController.addAction(action)
         present(alertController, animated: true)
-        
     }
     @MainActor
     private func setErrorMessage(text: String) {
@@ -91,7 +90,7 @@ class ViewController: UIViewController, ImagePickerDelegate {
         self.imagePicker.present(from: view)
     }
     @IBAction func nextButtonAction(_ sender: UIButton) {
-        let randNum = Int.random(in: 6...35)
+        let randNum = Int.random(in: 9...29)
         self.imageView.image = UIImage(named: "face\(randNum)")
         self.detect()
     }
@@ -118,7 +117,7 @@ class ViewController: UIViewController, ImagePickerDelegate {
         if let faces = faces as? [CIFaceFeature], !faces.isEmpty {
             for face in faces {
                 
-                print("Found bounds are \(face.bounds)")
+                print("Found face bounds are \(face.bounds)")
                 
                 // Добавили вычисление фактического положения faceBox
                 var faceViewBounds = face.bounds.applying(transform)
@@ -174,3 +173,4 @@ class ViewController: UIViewController, ImagePickerDelegate {
     
 }
 
+// 
